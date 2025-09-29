@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>se.liu.research.retriever</groupId>
+  <artifactId>retriever</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>retriever-base</module>
+    <module>retriever-cli</module>
+    <module>retriever-service</module>
+    <module>retriever-vocabs</module>
+    <module>retriever-websocket-connector</module>
+  </modules>
+
+  <!-- Project Meta Data -->
+  <name>RetrieveR</name>
+  <description>RetrieveR extends RSP-QL and the VoCaLS catalog ontology to enable discovery-driven RDF stream processing. Instead of hard-coding stream identifiers, users describe the shape and nature of the desired streaming RDF data; RetrieveR finds, retrieves, and maintains a virtual RDF stream on which ordinary RSP-QL queries are evaluated. Access to virtual streams is negotiated via contracts and mediated by metastream brokers, improving robustness to changing stream availability.</description>
+  <url>https://liusemweb.github.io/RetrieveR/</url>
+
+  <!-- License -->
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <!-- Developer Information -->
+  <developers>
+    <developer>
+      <name>Robin Keskisärkkä</name>
+      <email>robin.keskisarkka@liu.se</email>
+      <organization>Linköping University</organization>
+      <organizationUrl>https://liu.se/</organizationUrl>
+    </developer>
+    <developer>
+      <name>Daniel de Leng</name>
+      <email>daniel.de.leng@liu.se</email>
+      <organization>Linköping University</organization>
+      <organizationUrl>https://liu.se/</organizationUrl>
+    </developer>
+  </developers>
+
+  <!-- SCM (Source Code Management) -->
+  <scm>
+    <connection>scm:git:git://github.com/LiUSemWeb/RetrieveR.git</connection>
+    <developerConnection>scm:git:ssh://github.com:LiUSemWeb/RetrieveR.git</developerConnection>
+    <url>https://github.com/LiUSemWeb/RetrieveR</url>
+  </scm>
+
+  <!-- Properties -->
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <gpg.skip>true</gpg.skip>
+  </properties>
+
+  <!-- Dependencies -->
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>2.0.5</version>
+    </dependency>
+  </dependencies>
+
+  <!-- Build -->
+  <build>
+    <plugins>
+      <!-- Javadoc plugin  -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.10.0</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>target/reports/${project.version}</outputDirectory>
+              <failOnError>false</failOnError>
+              <additionalOptions>
+                <additionalOption>--no-module-directories</additionalOption>
+              </additionalOptions>
+            </configuration>
+          </execution>
+          <execution>
+            <id>generate-javadoc</id>
+            <phase>package</phase>
+            <goals>
+              <goal>aggregate</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>target/reports/${project.version}</outputDirectory>
+              <failOnError>false</failOnError>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Surefire Plugin (for running tests) -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M7</version>
+        <configuration>
+          <argLine>
+            --add-exports=java.base/jdk.internal.ref=ALL-UNNAMED
+            --add-exports=java.base/sun.nio.ch=ALL-UNNAMED
+            --add-exports=jdk.unsupported/sun.misc=ALL-UNNAMED
+            --add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED
+            --add-opens=jdk.compiler/com.sun.tools.javac=ALL-UNNAMED
+            --add-opens=java.base/java.lang=ALL-UNNAMED
+            --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+            --add-opens=java.base/java.io=ALL-UNNAMED
+            --add-opens=java.base/java.util=ALL-UNNAMED
+          </argLine>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
