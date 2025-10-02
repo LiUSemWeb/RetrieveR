@@ -1,0 +1,10 @@
+<!doctype html>
+<title>WS Counter</title>
+<pre id="out"></pre>
+<script>
+    const out = document.getElementById('out');
+    const ws = new WebSocket('ws://localhost:7070/ws/counter');
+    ws.onmessage = e => out.textContent += e.data + '\n';
+    ws.onopen = () => out.textContent += 'connected\n';
+    ws.onclose = () => out.textContent += 'closed\n';
+</script>

@@ -9,10 +9,9 @@
 
   <modules>
     <module>retriever-base</module>
-    <module>retriever-cli</module>
     <module>retriever-service</module>
     <module>retriever-vocabs</module>
-    <module>retriever-websocket-connector</module>
+    <module>retriever-demo</module>
   </modules>
 
   <!-- Project Meta Data -->

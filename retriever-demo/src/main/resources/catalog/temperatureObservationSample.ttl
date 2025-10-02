@@ -1,0 +1,39 @@
+@prefix sosa:   <http://www.w3.org/ns/sosa/> .
+@prefix qudt:   <http://qudt.org/schema/qudt/> .
+@prefix unit:   <http://qudt.org/vocab/unit/> .
+@prefix qk:     <http://qudt.org/vocab/quantitykind/> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex:     <http://example.org/> .
+
+ex:TemperatureObservation1 a sosa:Observation ;
+  sosa:madeBySensor ex:TemperatureSensor1 ;
+  sosa:observedProperty qk:Temperature ;
+  sosa:hasFeatureOfInterest ex:RoomA ;
+  sosa:resultTime "2025-09-30T20:39:28.809622Z"^^xsd:dateTime ;
+  sosa:hasResult [
+    a qudt:QuantityValue ;
+    qudt:numericValue "20.40"^^xsd:double ;
+    qudt:unit unit:DEG_C
+  ] .
+
+ex:TemperatureObservation2 a sosa:Observation ;
+  sosa:madeBySensor ex:TemperatureSensor1 ;
+  sosa:observedProperty qk:Temperature ;
+  sosa:hasFeatureOfInterest ex:RoomA ;
+  sosa:resultTime "2025-09-30T20:39:29.809996Z"^^xsd:dateTime ;
+  sosa:hasResult [
+    a qudt:QuantityValue ;
+    qudt:numericValue "20.60"^^xsd:double ;
+    qudt:unit unit:DEG_C
+  ] .
+
+ex:TemperatureObservation3 a sosa:Observation ;
+  sosa:madeBySensor ex:TemperatureSensor1 ;
+  sosa:observedProperty qk:Temperature ;
+  sosa:hasFeatureOfInterest ex:RoomA ;
+  sosa:resultTime "2025-09-30T20:39:30.807874Z"^^xsd:dateTime ;
+  sosa:hasResult [
+    a qudt:QuantityValue ;
+    qudt:numericValue "20.80"^^xsd:double ;
+    qudt:unit unit:DEG_C
+  ] .

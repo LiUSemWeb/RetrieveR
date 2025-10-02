@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>se.liu.research.retriever</groupId>
+    <artifactId>retriever</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>retiriver-demo</artifactId>
+
+  <!-- Project Meta Data -->
+  <name>RetrieveR</name>
+  <description>RetrieveR extends RSP-QL and the VoCaLS catalog ontology to enable discovery-driven RDF stream processing. Instead of hard-coding stream identifiers, users describe the shape and nature of the desired streaming RDF data; RetrieveR finds, retrieves, and maintains a virtual RDF stream on which ordinary RSP-QL queries are evaluated. Access to virtual streams is negotiated via contracts and mediated by metastream brokers, improving robustness to changing stream availability.</description>
+  <url>https://liusemweb.github.io/RetrieveR/</url>
+
+  <!-- License -->
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <!-- Developer Information -->
+  <developers>
+    <developer>
+      <name>Robin Keskisärkkä</name>
+      <email>robin.keskisarkka@liu.se</email>
+      <organization>Linköping University</organization>
+      <organizationUrl>https://liu.se/</organizationUrl>
+    </developer>
+    <developer>
+      <name>Daniel de Leng</name>
+      <email>daniel.de.leng@liu.se</email>
+      <organization>Linköping University</organization>
+      <organizationUrl>https://liu.se/</organizationUrl>
+    </developer>
+  </developers>
+
+  <!-- SCM (Source Code Management) -->
+  <scm>
+    <connection>scm:git:git://github.com/LiUSemWeb/RetrieveR.git</connection>
+    <developerConnection>scm:git:ssh://github.com:LiUSemWeb/RetrieveR.git</developerConnection>
+    <url>https://github.com/LiUSemWeb/RetrieveR</url>
+  </scm>
+
+  <dependencies>
+    <!-- retriever-base -->
+    <dependency>
+      <groupId>se.liu.research.retriever</groupId>
+      <artifactId>retriever-base</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+</project>

@@ -1,0 +1,269 @@
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix vocals:  <https://example.org/vocals#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix sosa:    <http://www.w3.org/ns/sosa/> .
+@prefix qudt:    <http://qudt.org/schema/qudt/> .
+@prefix unit:    <http://qudt.org/vocab/unit/> .
+@prefix qk:      <http://qudt.org/vocab/quantitykind/> .
+@prefix :        <https://example.org/id/> .
+
+######################################################################
+# Catalog with records with streams as as primary topics
+######################################################################
+:cat1 a dcat:Catalog ;
+	dcat:record :rec1, :rec2, :rec3, :rec4 .
+
+:rec1 a dcat:CatalogRecord, vocals:StreamDescriptor ;
+	foaf:primaryTopic :HumidityStream1 .
+
+:rec2 a dcat:CatalogRecord, vocals:StreamDescriptor ;
+	foaf:primaryTopic :HumidityStream2 .
+
+:rec3 a dcat:CatalogRecord, vocals:StreamDescriptor ;
+	foaf:primaryTopic :TemperatureStream1 .
+
+:rec4 a dcat:CatalogRecord, vocals:StreamDescriptor ;
+	foaf:primaryTopic :TemperatureStream2 .
+
+######################################################################
+# Humidity streams
+######################################################################
+:HumidityStream1 a vocals:RDFStream ;
+	dcterms:accessRights <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+	dcterms:conformsTo :HumidityObservationShape ;
+	dcat:distribution :HumidityObservationSample ;
+	vocals:hasEndpoint [
+		a vocals:StreamEndpoint ;
+		dcat:accessURL <ws://localhost:7070/ws/sensor1> ;
+		dcterms:format <http://www.iana.org/assignments/media-types/text/turtle> ;
+		dcterms:conformsTo <https://www.rfc-editor.org/rfc/rfc6455>
+	] .
+
+:HumidityStream2 a vocals:RDFStream ;
+	dcterms:accessRights <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+	dcterms:conformsTo :HumidityObservationShape ;
+	dcat:distribution :HumidityObservationSample ;
+	vocals:hasEndpoint [
+		a vocals:StreamEndpoint ;
+		dcat:accessURL <ws://localhost:7070/ws/sensor2> ;
+		dcterms:format <http://www.iana.org/assignments/media-types/text/turtle> ;
+		dcterms:conformsTo <https://www.rfc-editor.org/rfc/rfc6455>
+	] .
+
+######################################################################
+# Humidity stream sample
+######################################################################
+:HumidityObservationSample
+	a dcat:Distribution ;
+	dcterms:description "Sample with 3 events expressed as Turtle."@en ;
+	dcat:mediaType <http://www.iana.org/assignments/media-types/text/turtle> ;
+	dcat:downloadURL <http://localhost:7070/catalog/humidityObservationSample.ttl> .
+
+######################################################################
+# Temperature streams
+######################################################################
+:TemperatureStream1 a vocals:RDFStream ;
+	dcterms:accessRights <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+	dcterms:conformsTo :TemperatureObservationShape ;
+	dcat:distribution :TemperatureObservationSample ;
+	vocals:hasEndpoint [
+		a vocals:StreamEndpoint ;
+		dcat:accessURL <ws://localhost:7070/ws/sensor3> ;
+		dcterms:format <http://www.iana.org/assignments/media-types/text/turtle> ;
+		dcterms:conformsTo <https://www.rfc-editor.org/rfc/rfc6455>
+	] .
+
+:TemperatureStream2 a vocals:RDFStream ;
+	dcterms:accessRights <http://publications.europa.eu/resource/authority/access-right/RESTRICTED> ;
+	dcterms:conformsTo :TemperatureObservationShape ;
+	dcat:distribution :TemperatureObservationSample ;
+	vocals:hasEndpoint [
+		a vocals:StreamEndpoint ;
+		dcat:accessURL <ws://localhost:7070/ws/sensor4> ;
+		dcterms:format <http://www.iana.org/assignments/media-types/text/turtle> ;
+		dcterms:conformsTo <https://www.rfc-editor.org/rfc/rfc6455>
+	] .
+
+######################################################################
+# Temperature stream sample
+######################################################################
+:TemperatureObservationSample
+	a dcat:Distribution ;
+	dcterms:description "Sample with 3 events expressed as Turtle."@en ;
+	dcat:mediaType <http://www.iana.org/assignments/media-types/text/turtle> ;
+	dcat:downloadURL <http://localhost:7070/catalog/temperatureObservationSample.ttl> .
+
+######################################################################
+# Node shape for observations of humidity
+######################################################################
+:HumidityObservationShape
+	dcterms:format <http://www.w3.org/ns/formats/SHACL> ;
+	a sh:NodeShape ;
+	sh:targetClass sosa:Observation ;
+
+  # must be a humidity observation (observedProperty fixed to RelativeHumidity)
+  sh:property [
+    sh:path sosa:observedProperty ;
+    sh:hasValue qk:RelativeHumidity ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "Observed property must be qk:RelativeHumidity." ;
+  ] ;
+
+  # must indicate which sensor made the observation (IRI)
+  sh:property [
+    sh:path sosa:madeBySensor ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:message "madeBySensor must be a single IRI of the sensor." ;
+  ] ;
+
+  # must indicate the feature of interest (IRI)
+  sh:property [
+    sh:path sosa:hasFeatureOfInterest ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:message "hasFeatureOfInterest must be a single IRI (e.g., the room/location)." ;
+  ] ;
+
+  # result time present and correctly typed
+  sh:property [
+    sh:path sosa:resultTime ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:dateTime ;
+    sh:message "resultTime must be a single xsd:dateTime." ;
+  ] ;
+
+  # result must be a QuantityValue with % unit and 0..100 value
+  sh:property [
+    sh:path sosa:hasResult ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:node :HumidityQuantityShape ;
+    sh:message "hasResult must be a qudt:QuantityValue with unit:PERCENT and value in [0,100]." ;
+  ] .
+
+######################################################################
+# Shape for the humidity result quantity
+######################################################################
+:HumidityQuantityShape
+  a sh:NodeShape ;
+  sh:property [
+    sh:path rdf:type ;
+    sh:hasValue qudt:QuantityValue ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  # numeric value between 0 and 100 (inclusive)
+  sh:property [
+    sh:path qudt:numericValue ;
+    sh:datatype xsd:double ;
+    sh:minInclusive 0.0 ;
+    sh:maxInclusive 100.0 ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "numericValue must be a double in the range 0..100." ;
+  ] ;
+
+  # unit must be percent
+  sh:property [
+    sh:path qudt:unit ;
+    sh:hasValue unit:PERCENT ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "unit must be unit:PERCENT." ;
+  ] .
+
+######################################################################
+# Node shape for observations of temperature
+######################################################################
+:TemperatureObservationShape
+	dcterms:format <http://www.w3.org/ns/formats/SHACL> ;
+	a sh:NodeShape ;
+	sh:targetClass sosa:Observation ;
+
+  # must be a temperature observation (observedProperty fixed to Temperature)
+  sh:property [
+    sh:path sosa:observedProperty ;
+    sh:hasValue qk:Temperature ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "Observed property must be qk:Temperature." ;
+  ] ;
+
+  # must indicate which sensor made the observation (IRI)
+  sh:property [
+    sh:path sosa:madeBySensor ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:message "madeBySensor must be a single IRI of the sensor." ;
+  ] ;
+
+  # must indicate the feature of interest (IRI)
+  sh:property [
+    sh:path sosa:hasFeatureOfInterest ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:message "hasFeatureOfInterest must be a single IRI (e.g., the room/location)." ;
+  ] ;
+
+  # result time present and correctly typed
+  sh:property [
+    sh:path sosa:resultTime ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:dateTime ;
+    sh:message "resultTime must be a single xsd:dateTime." ;
+  ] ;
+
+  # result must be a QuantityValue with % unit and 0..100 value
+  sh:property [
+    sh:path sosa:hasResult ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:node :TemperatureQuantityShape ;
+    sh:message "hasResult must be a qudt:QuantityValue with unit:PERCENT and value in [0,100]." ;
+  ] .
+
+######################################################################
+# Shape for the temerpature result quantity
+######################################################################
+:TemperatureQuantityShape
+  a sh:NodeShape ;
+  sh:property [
+    sh:path rdf:type ;
+    sh:hasValue qudt:QuantityValue ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  # numeric value between -30 and 50 (inclusive)
+  sh:property [
+    sh:path qudt:numericValue ;
+    sh:datatype xsd:double ;
+    sh:minInclusive -30 ;
+    sh:maxInclusive 50 ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "numericValue must be a double in the range -30..50." ;
+  ] ;
+
+  # unit must be in DEG_C
+  sh:property [
+    sh:path qudt:unit ;
+    sh:hasValue unit:DEG_C ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "unit must be unit:DEG_C." ;
+  ] .
+

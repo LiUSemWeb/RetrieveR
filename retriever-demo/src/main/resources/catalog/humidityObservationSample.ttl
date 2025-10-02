@@ -1,0 +1,39 @@
+@prefix sosa:   <http://www.w3.org/ns/sosa/> .
+@prefix qudt:   <http://qudt.org/schema/qudt/> .
+@prefix unit:   <http://qudt.org/vocab/unit/> .
+@prefix qk:     <http://qudt.org/vocab/quantitykind/> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex:     <http://example.org/> .
+
+ex:HumidityObservation1 a sosa:Observation ;
+  sosa:madeBySensor ex:HumiditySensor1 ;
+  sosa:observedProperty qk:RelativeHumidity ;
+  sosa:hasFeatureOfInterest ex:RoomA ;
+  sosa:resultTime "2025-09-30T20:40:41.571705Z"^^xsd:dateTime ;
+  sosa:hasResult [
+    a qudt:QuantityValue ;
+    qudt:numericValue "92.00"^^xsd:double ;
+    qudt:unit unit:PERCENT
+  ] .
+
+ex:HumidityObservation2 a sosa:Observation ;
+  sosa:madeBySensor ex:HumiditySensor1 ;
+  sosa:observedProperty qk:RelativeHumidity ;
+  sosa:hasFeatureOfInterest ex:RoomA ;
+  sosa:resultTime "2025-09-30T20:40:42.574245Z"^^xsd:dateTime ;
+  sosa:hasResult [
+    a qudt:QuantityValue ;
+    qudt:numericValue "93.00"^^xsd:double ;
+    qudt:unit unit:PERCENT
+  ] .
+
+ex:HumidityObservation3 a sosa:Observation ;
+  sosa:madeBySensor ex:HumiditySensor1 ;
+  sosa:observedProperty qk:RelativeHumidity ;
+  sosa:hasFeatureOfInterest ex:RoomA ;
+  sosa:resultTime "2025-09-30T20:40:43.574698Z"^^xsd:dateTime ;
+  sosa:hasResult [
+    a qudt:QuantityValue ;
+    qudt:numericValue "94.00"^^xsd:double ;
+    qudt:unit unit:PERCENT
+  ] .
