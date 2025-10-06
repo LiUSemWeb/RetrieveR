@@ -1,0 +1,2 @@
+PREFIX : <http://ex/>
+:s :p :o ~ :t {| :source :g |} .

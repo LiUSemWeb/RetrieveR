@@ -2,7 +2,7 @@
 @prefix dcat:    <http://www.w3.org/ns/dcat#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf:    <http://xmlns.com/foaf/0.1/> .
-@prefix vocals:  <https://example.org/vocals#> .
+@prefix vocals:  <http://w3id.org/rsp/vocals#> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
 @prefix sh:      <http://www.w3.org/ns/shacl#> .
 @prefix sosa:    <http://www.w3.org/ns/sosa/> .
@@ -10,6 +10,30 @@
 @prefix unit:    <http://qudt.org/vocab/unit/> .
 @prefix qk:      <http://qudt.org/vocab/quantitykind/> .
 @prefix :        <https://example.org/id/> .
+
+######################################################################
+# Note on IANA media types and dcat:mediaType:
+#
+# According to the usage note for dcat:mediaType:
+# "This property SHOULD be used when the media type of the distribution 
+#  is defined in IANA [IANA-MEDIA-TYPES]. Otherwise, dcterms:format MAY 
+#  be used with other values."
+#
+# The following RDF-related media types are registered with IANA:
+# - http://www.iana.org/assignments/media-types/application/rdf+xml
+# - http://www.iana.org/assignments/media-types/application/ld+json
+# - http://www.iana.org/assignments/media-types/text/turtle
+# - http://www.iana.org/assignments/media-types/application/trig
+# - http://www.iana.org/assignments/media-types/application/n-triples
+# - http://www.iana.org/assignments/media-types/application/n-quads
+# - http://www.iana.org/assignments/media-types/text/n3
+#
+# For RDF-star serializations (not yet registered with IANA), the following
+# provisional URIs will be used:
+# - http://jena.apache.org/riot/lang/RDFSTAR
+# - http://jena.apache.org/riot/lang/TURTLESTAR
+######################################################################
+
 
 ######################################################################
 # Catalog with records with streams as as primary topics

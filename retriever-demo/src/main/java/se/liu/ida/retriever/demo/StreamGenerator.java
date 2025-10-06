@@ -75,7 +75,7 @@ public class StreamGenerator
 		final AtomicInteger obsId = new AtomicInteger(0);
 		final DoubleAdder value = new DoubleAdder();
 		value.add(startValue);
-		final AtomicBoolean increasing = new AtomicBoolean(value.doubleValue() < maxValue ? true : false);
+		final AtomicBoolean increasing = new AtomicBoolean( value.doubleValue() < maxValue ? true : false );
 		
 		// Ticker to generate data
 		final ScheduledFuture<?> ticker = scheduler.scheduleAtFixedRate( () -> {
@@ -94,7 +94,7 @@ public class StreamGenerator
 				Instant.now(),
 				value.doubleValue()
 			);
-			System.err.println(data);
+
 			// Broadcast data to all current sessions
 			for ( WsContext s : sessions ) {
 				if ( s.session.isOpen() ) s.send(data);
