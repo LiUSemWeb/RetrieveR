@@ -1,0 +1,42 @@
+
+services:
+  catalog:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./catalog/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./catalog:/usr/share/nginx/html/catalog:ro
+    restart: unless-stopped
+
+  humidity1:
+    build: ./ws-template-stream
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./templates:/templates
+    environment:
+      INTERVAL_MS: 500
+      TEMPLATE_PATH: "/templates/humidity.mustache"
+      SENSOR: "HumiditySensor1"
+      INITIAL_VALUE: 40
+      MIN_VALUE: 30
+      MAX_VALUE: 50
+      MAX_DELTA_PER_SEC: 0.5
+    restart: unless-stopped
+
+  temp1:
+    build: ./ws-template-stream
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./templates:/templates
+    environment:
+      INTERVAL_MS: 1000
+      TEMPLATE_PATH: "/templates/temperature.mustache"
+      SENSOR: "TempSensor1"
+      INITIAL_VALUE: 20
+      MIN_VALUE: 15
+      MAX_VALUE: 30
+      MAX_DELTA_PER_SEC: 0.3
+    restart: unless-stopped
