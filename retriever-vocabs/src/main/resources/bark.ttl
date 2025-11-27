@@ -1,4 +1,4 @@
-@prefix : <http://w3id.org/rsp/bark#> .
+@prefix : <http://w3id.org/rsp/retriever/bark#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -8,9 +8,9 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix vocals: <http://w3id.org/rsp/vocals#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@base <http://w3id.org/rsp/bark#> .
+@base <http://w3id.org/rsp/retriever/bark#> .
 
-<http://w3id.org/rsp/bark> rdf:type owl:Ontology ;
+<http://w3id.org/rsp/retirever/bark> rdf:type owl:Ontology ;
                             owl:imports <http://w3id.org/rsp/vocals> ;
                             dcterms:contributor "Daniel de Leng" ,
                                                 "Pieter Bonte" ,
@@ -32,7 +32,7 @@ dcterms:conformsTo rdf:type owl:ObjectProperty ;
 ###  http://w3id.org/rsp/bark#conformsToShape
 :conformsToShape rdf:type owl:ObjectProperty ;
                  rdfs:subPropertyOf dcterms:conformsTo ;
-                 rdfs:domain :RDFStream ;
+                 rdfs:domain :Stream ;
                  rdfs:range sh:Shape ;
                  rdfs:comment "Indicates that an RDF stream conforms to a SHACL shape used to describe its structure or constraints."@en ;
                  rdfs:label "conforms to shape"@en .
@@ -49,7 +49,7 @@ dcterms:conformsTo rdf:type owl:ObjectProperty ;
 ###  http://w3id.org/rsp/bark#hasEndpoint
 :hasEndpoint rdf:type owl:ObjectProperty ;
              rdfs:subPropertyOf vocals:hasEndpoint ;
-             rdfs:domain :RDFStream ;
+             rdfs:domain :Stream ;
              rdfs:range :StreamEndpoint ;
              rdfs:comment "Relates an RDF stream to a stream endpoint through which the stream can be accessed."@en ;
              rdfs:label "has endpoint"@en .
@@ -59,7 +59,7 @@ dcterms:conformsTo rdf:type owl:ObjectProperty ;
 :stream rdf:type owl:ObjectProperty ;
         rdfs:subPropertyOf dcat:dataset ;
         rdfs:domain :StreamRecord ;
-        rdfs:range :RDFStream ;
+        rdfs:range :Stream ;
         rdfs:comment "Links a stream catalog record to an RDF stream."@en ;
         rdfs:label "stream"@en .
 
@@ -76,7 +76,7 @@ dcterms:conformsTo rdf:type owl:ObjectProperty ;
 ###  http://w3id.org/rsp/bark#streamSample
 :streamSample rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf dcat:distribution ;
-              rdfs:domain :RDFStream ;
+              rdfs:domain :Stream ;
               rdfs:comment "Relates an RDF stream to a sample dataset or distribution that represents a snapshot or partition of the stream."@en ;
               rdfs:label "stream sample"@en .
 
@@ -85,23 +85,23 @@ dcterms:conformsTo rdf:type owl:ObjectProperty ;
 #    Classes
 #################################################################
 
-###  http://w3id.org/rsp/bark#RDFStream
-:RDFStream rdf:type owl:Class ;
-           rdfs:subClassOf vocals:RDFStream ,
-                           [ rdf:type owl:Restriction ;
-                             owl:onProperty :conformsToShape ;
-                             owl:someValuesFrom sh:Shape
-                           ] ,
-                           [ rdf:type owl:Restriction ;
-                             owl:onProperty :hasEndpoint ;
-                             owl:someValuesFrom :StreamEndpoint
-                           ] ,
-                           [ rdf:type owl:Restriction ;
-                             owl:onProperty :streamSample ;
-                             owl:someValuesFrom dcat:Dataset
-                           ] ;
-           rdfs:comment "A data stream whose items are expressed as RDF (triples or graphs)."@en ;
-           rdfs:label "RDF stream"@en .
+###  http://w3id.org/rsp/bark#Stream
+:Stream rdf:type owl:Class ;
+        rdfs:subClassOf vocals:RDFStream ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty :conformsToShape ;
+                          owl:someValuesFrom sh:Shape
+                        ] ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty :hasEndpoint ;
+                          owl:someValuesFrom :StreamEndpoint
+                        ] ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty :streamSample ;
+                          owl:someValuesFrom dcat:Dataset
+                        ] ;
+        rdfs:comment "A data stream whose items are expressed as RDF (triples or graphs)."@en ;
+        rdfs:label "Stream"@en .
 
 
 ###  http://w3id.org/rsp/bark#StreamCatalog
@@ -131,7 +131,7 @@ dcterms:conformsTo rdf:type owl:ObjectProperty ;
               rdfs:subClassOf vocals:StreamDescriptor ,
                               [ rdf:type owl:Restriction ;
                                 owl:onProperty :stream ;
-                                owl:someValuesFrom :RDFStream
+                                owl:someValuesFrom :Stream
                               ] ;
               rdfs:comment "A catalog record describing an RDF stream, including references to the stream resource itself."@en ;
               rdfs:label "Stream record"@en .
@@ -150,5 +150,11 @@ sh:Shape rdf:type owl:Class ;
          rdfs:comment "An abstract SHACL shape that defines constraints over RDF data."@en ;
          rdfs:label "SHACL shape"@en .
 
+
+:barkStreamRate a owl:DatatypeProperty ;
+    rdfs:domain :StreamEndpoint ;
+    rdfs:range xsd:decimal ;
+    rdfs:comment "Average number of RDF items produced per second by this stream endpoint."@en ;
+    rdfs:label "stream rate"@en .
 
 ###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi
