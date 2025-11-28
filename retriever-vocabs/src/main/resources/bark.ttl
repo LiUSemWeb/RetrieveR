@@ -10,14 +10,15 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @base <http://w3id.org/rsp/retriever/bark#> .
 
-<http://w3id.org/rsp/retirever/bark> rdf:type owl:Ontology ;
-                            owl:imports <http://w3id.org/rsp/vocals> ;
-                            dcterms:contributor "Daniel de Leng" ,
-                                                "Pieter Bonte" ,
-                                                "Volodymyr Kadzhaia" ;
-                            dcterms:created "2025-11-26"^^xsd:date ;
-                            dcterms:creator "Robin Keskisärkkä" ;
-                            dcterms:description "BARK extends the VoCaLS ontology and aligns with DCAT to describe and manage RDF streams in environments where the set of available streams is large or dynamic. BARK provides a descriptive, declarative layer over RDF streams by capturing their structure, endpoints, shapes, formats, and sample data. This enables the RetrieveR system to automatically discover, retrieve, and maintain virtual RDF streams based on the users' data constraints."@en .
+<http://w3id.org/rsp/retriever/bark> rdf:type owl:Ontology ;
+                                      owl:imports <http://w3id.org/rsp/vocals> ;
+                                      dcterms:contributor "Daniel de Leng" ,
+                                                          "Pieter Bonte" ,
+                                                          "Volodymyr Kadzhaia" ;
+                                      dcterms:created "2025-11-26"^^xsd:date ;
+                                      dcterms:creator "Robin Keskisärkkä" ;
+                                      dcterms:description "The Base RetrieveR Knowledge (BaRK) module extends the VoCaLS ontology and aligns with DCAT to describe and manage RDF streams in environments where the set of available streams is large or dynamic. BaRK provides a descriptive, declarative layer over RDF streams by capturing their structure, endpoints, shapes, formats, and sample data. This enables the RetrieveR system to automatically discover, retrieve, and maintain virtual RDF streams based on the users' data constraints."@en ;
+                                      <http://purl.org/vocab/vann/preferredNamespacePrefix> "bark" .
 
 #################################################################
 #    Object Properties
@@ -29,7 +30,7 @@ dcterms:conformsTo rdf:type owl:ObjectProperty ;
                    rdfs:label "Conforms To"@en .
 
 
-###  http://w3id.org/rsp/bark#conformsToShape
+###  http://w3id.org/rsp/retriever/bark#conformsToShape
 :conformsToShape rdf:type owl:ObjectProperty ;
                  rdfs:subPropertyOf dcterms:conformsTo ;
                  rdfs:domain :Stream ;
@@ -38,7 +39,7 @@ dcterms:conformsTo rdf:type owl:ObjectProperty ;
                  rdfs:label "conforms to shape"@en .
 
 
-###  http://w3id.org/rsp/bark#endpointURL
+###  http://w3id.org/rsp/retriever/bark#endpointURL
 :endpointURL rdf:type owl:ObjectProperty ;
              rdfs:subPropertyOf dcat:accessURL ;
              rdfs:domain :StreamEndpoint ;
@@ -46,7 +47,7 @@ dcterms:conformsTo rdf:type owl:ObjectProperty ;
              rdfs:label "endpoint URL"@en .
 
 
-###  http://w3id.org/rsp/bark#hasEndpoint
+###  http://w3id.org/rsp/retriever/bark#hasEndpoint
 :hasEndpoint rdf:type owl:ObjectProperty ;
              rdfs:subPropertyOf vocals:hasEndpoint ;
              rdfs:domain :Stream ;
@@ -55,7 +56,7 @@ dcterms:conformsTo rdf:type owl:ObjectProperty ;
              rdfs:label "has endpoint"@en .
 
 
-###  http://w3id.org/rsp/bark#stream
+###  http://w3id.org/rsp/retriever/bark#stream
 :stream rdf:type owl:ObjectProperty ;
         rdfs:subPropertyOf dcat:dataset ;
         rdfs:domain :StreamRecord ;
@@ -64,7 +65,7 @@ dcterms:conformsTo rdf:type owl:ObjectProperty ;
         rdfs:label "stream"@en .
 
 
-###  http://w3id.org/rsp/bark#streamRecord
+###  http://w3id.org/rsp/retriever/bark#streamRecord
 :streamRecord rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf dcat:record ;
               rdfs:domain :StreamCatalog ;
@@ -73,7 +74,7 @@ dcterms:conformsTo rdf:type owl:ObjectProperty ;
               rdfs:label "stream record"@en .
 
 
-###  http://w3id.org/rsp/bark#streamSample
+###  http://w3id.org/rsp/retriever/bark#streamSample
 :streamSample rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf dcat:distribution ;
               rdfs:domain :Stream ;
@@ -82,10 +83,22 @@ dcterms:conformsTo rdf:type owl:ObjectProperty ;
 
 
 #################################################################
+#    Data properties
+#################################################################
+
+###  http://w3id.org/rsp/retriever/bark#barkStreamRate
+:barkStreamRate rdf:type owl:DatatypeProperty ;
+                rdfs:domain :StreamEndpoint ;
+                rdfs:range xsd:decimal ;
+                rdfs:comment "Average number of RDF items produced per second by this stream endpoint."@en ;
+                rdfs:label "stream rate"@en .
+
+
+#################################################################
 #    Classes
 #################################################################
 
-###  http://w3id.org/rsp/bark#Stream
+###  http://w3id.org/rsp/retriever/bark#Stream
 :Stream rdf:type owl:Class ;
         rdfs:subClassOf vocals:RDFStream ,
                         [ rdf:type owl:Restriction ;
@@ -104,7 +117,7 @@ dcterms:conformsTo rdf:type owl:ObjectProperty ;
         rdfs:label "Stream"@en .
 
 
-###  http://w3id.org/rsp/bark#StreamCatalog
+###  http://w3id.org/rsp/retriever/bark#StreamCatalog
 :StreamCatalog rdf:type owl:Class ;
                rdfs:subClassOf dcat:Catalog ,
                                [ rdf:type owl:Restriction ;
@@ -115,7 +128,7 @@ dcterms:conformsTo rdf:type owl:ObjectProperty ;
                rdfs:label "Stream catalog"@en .
 
 
-###  http://w3id.org/rsp/bark#StreamEndpoint
+###  http://w3id.org/rsp/retriever/bark#StreamEndpoint
 :StreamEndpoint rdf:type owl:Class ;
                 rdfs:subClassOf vocals:StreamDistribution ,
                                 [ rdf:type owl:Restriction ;
@@ -126,7 +139,7 @@ dcterms:conformsTo rdf:type owl:ObjectProperty ;
                 rdfs:label "Stream endpoint"@en .
 
 
-###  http://w3id.org/rsp/bark#StreamRecord
+###  http://w3id.org/rsp/retriever/bark#StreamRecord
 :StreamRecord rdf:type owl:Class ;
               rdfs:subClassOf vocals:StreamDescriptor ,
                               [ rdf:type owl:Restriction ;
@@ -137,7 +150,7 @@ dcterms:conformsTo rdf:type owl:ObjectProperty ;
               rdfs:label "Stream record"@en .
 
 
-###  http://w3id.org/rsp/bark#StreamSample
+###  http://w3id.org/rsp/retriever/bark#StreamSample
 :StreamSample rdf:type owl:Class ;
               rdfs:subClassOf vocals:StreamPartition ;
               rdfs:comment "A partition or sample of an RDF stream that can be used for validation, testing, or example queries."@en ,
@@ -151,10 +164,4 @@ sh:Shape rdf:type owl:Class ;
          rdfs:label "SHACL shape"@en .
 
 
-:barkStreamRate a owl:DatatypeProperty ;
-    rdfs:domain :StreamEndpoint ;
-    rdfs:range xsd:decimal ;
-    rdfs:comment "Average number of RDF items produced per second by this stream endpoint."@en ;
-    rdfs:label "stream rate"@en .
-
-###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
